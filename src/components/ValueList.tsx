@@ -48,7 +48,8 @@ export function ValueList({ label, values, onChange }: Props) {
 				/>
 				<button
 					onClick={add}
-					className="rounded-lg bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-500"
+					className="rounded-lg bg-green-600 px-3 py-2 text-sm font-medium text-white hover:bg-green-500
+					transform transition duration-200 hover:scale-105"
 				>
 					Adicionar
 				</button>
