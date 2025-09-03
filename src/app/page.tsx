@@ -86,8 +86,8 @@ export default function Home() {
 				<div className="mt-6">
 					<button
 						onClick={resetAll}
-						className="rounded-lg border border-green-300 bg-green-50 px-4 py-2 text-sm font-medium text-green-700 hover:bg-green-100"
-					>
+						className="rounded-lg border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 
+						hover:bg-red-200 transform transition duration-200 hover:scale-105">
 						Limpar valores
 					</button>
 				</div>
@@ -98,7 +98,7 @@ export default function Home() {
 				<h2 className="text-lg font-semibold text-green-700">Inserir Valores</h2>
 				<p className="mb-4 mt-1 text-sm text-black-300 font-semibold">
 					Digite valores (R$) e clique em [Adicionar]. Aceita ponto ou vírgula (ex: 1400,50). Obs: Não clique em [Adicionar]
-          sem ter nenhum valor, pois isso vai alterar a média.
+					sem ter nenhum valor, pois isso vai alterar a média.
 				</p>
 
 				<div className="space-y-6">
