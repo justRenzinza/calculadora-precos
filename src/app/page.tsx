@@ -61,7 +61,7 @@ export default function Home() {
 						<CoffeeCard
 							title="Conilon"
 							value={perCulture.conilon.avg}
-							extra={`n=${perCulture.conilon.count} · min ${formatBRL(perCulture.conilon.min)} · máx ${formatBRL(perCulture.conilon.max)}`}
+							extra={`Quantidade = ${perCulture.conilon.count} | Mínimo ${formatBRL(perCulture.conilon.min)} | Máximo ${formatBRL(perCulture.conilon.max)}`}
 							formatBRL={formatBRL}
 						/>
 					</div>
@@ -69,7 +69,7 @@ export default function Home() {
 						<CoffeeCard
 							title="Arabica Rio"
 							value={perCulture.arabicaRio.avg}
-							extra={`n=${perCulture.arabicaRio.count} · min ${formatBRL(perCulture.arabicaRio.min)} · máx ${formatBRL(perCulture.arabicaRio.max)}`}
+							extra={`Quantidade = ${perCulture.arabicaRio.count} | Mínimo ${formatBRL(perCulture.arabicaRio.min)} | Máximo ${formatBRL(perCulture.arabicaRio.max)}`}
 							formatBRL={formatBRL}
 						/>
 					</div>
@@ -77,7 +77,7 @@ export default function Home() {
 						<CoffeeCard
 							title="Arabica Duro"
 							value={perCulture.arabicaDuro.avg}
-							extra={`n=${perCulture.arabicaDuro.count} · min ${formatBRL(perCulture.arabicaDuro.min)} · máx ${formatBRL(perCulture.arabicaDuro.max)}`}
+							extra={`Quantidade = ${perCulture.arabicaDuro.count} | Mínimo ${formatBRL(perCulture.arabicaDuro.min)} | Máximo ${formatBRL(perCulture.arabicaDuro.max)}`}
 							formatBRL={formatBRL}
 						/>
 					</div>
