@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="pt-BR" className="h-full">
 			<body className="min-h-screen h-full flex flex-col bg-white text-slate-800 antialiased">
 				<header className="w-full sticky top-0 z-10 border-b border-green-700 bg-green-600 text-white backdrop-blur">
-					<div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-2 sm:px-4 sm:py-3">
+					<div className="mx-auto flex max-w-6xl items-center justify-center px-3 py-2 sm:px-4 sm:py-3">
 						<div className="flex items-center gap-2 min-w-0">
 							<img src="/coffee-beans.png" alt="Ícone de café" className="h-5 w-5 sm:h-6 sm:w-6 shrink-0" />
 							<h1 className="truncate text-sm font-semibold sm:text-lg">
