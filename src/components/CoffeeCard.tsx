@@ -2,31 +2,22 @@
 type Props = {
 	title: string
 	value: number
-	median?: number
 	extra?: string
 	formatBRL: (v: number) => string
 }
 
-export function CoffeeCard({ title, value, median, extra, formatBRL }: Props) {
+export function CoffeeCard({ title, value, extra, formatBRL }: Props) {
 	return (
-		<div className="h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-			{/* Header verdinho */}
-			<div className="flex items-center justify-between border-b border-green-200 bg-green-50 px-5 py-3">
-				<h3 className="font-semibold text-green-800">{title}</h3>
-				{typeof median === 'number' && median > 0 ? (
-					<span className="rounded-full border border-green-300 bg-white px-2.5 py-1 text-xs font-medium text-green-800">
-						Mediana: {formatBRL(median)}
-					</span>
-				) : null}
+		<div className="h-full overflow-hidden rounded-2xl border border-green-200 bg-white shadow-sm">
+			<div className="border-b border-green-200 bg-green-50 px-4 py-2 sm:px-5 sm:py-3">
+				<h3 className="text-sm font-semibold text-green-700 sm:text-base">{title}</h3>
 			</div>
-
-			{/* Corpo */}
-			<div className="p-5">
-				<p className="text-3xl font-extrabold tracking-tight text-green-600">
+			<div className="p-4 sm:p-5">
+				<p className="text-2xl font-extrabold tracking-tight text-green-600 sm:text-3xl">
 					{formatBRL(value || 0)}
 				</p>
 				{extra ? (
-					<p className="mt-2 text-xs text-slate-500">{extra}</p>
+					<p className="mt-2 text-[11px] text-slate-600 sm:text-xs">{extra}</p>
 				) : null}
 			</div>
 		</div>

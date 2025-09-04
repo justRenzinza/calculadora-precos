@@ -48,15 +48,15 @@ export default function Home() {
 	}
 
 	return (
-		<div className="grid gap-8 md:grid-cols-[1fr_420px]">
+		<div className="grid gap-6 sm:gap-8 md:grid-cols-[1fr_420px]">
 			{/* ESQUERDA: Resultados */}
-			<section className="rounded-2xl border border-green-200 bg-white p-6 shadow-sm">
-				<div className="mb-4 flex items-center justify-between">
-					<h2 className="text-lg font-semibold text-green-700">Médias do Dia</h2>
-				</div>
+			<section className="rounded-2xl border border-green-300 bg-white p-4 shadow-sm sm:p-6">
+				<h2 className="mb-3 text-base font-semibold text-green-700 sm:mb-4 sm:text-lg">
+					Médias do Dia
+				</h2>
 
-				{/* 3 cards iguais em desktop */}
-				<div className="grid items-stretch gap-5 md:grid-cols-3">
+				{/* 1 card por linha no mobile, 3 no desktop */}
+				<div className="grid items-stretch gap-4 sm:gap-5 md:grid-cols-3">
 					<div className="h-full">
 						<CoffeeCard
 							title="Conilon"
@@ -83,22 +83,21 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className="mt-6">
+				<div className="mt-4 sm:mt-6">
 					<button
 						onClick={resetAll}
-						className="rounded-lg border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 
-						hover:bg-red-200 transform transition duration-200 hover:scale-105">
+						className="w-full sm:w-auto rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100"
+					>
 						Limpar valores
 					</button>
 				</div>
 			</section>
 
 			{/* DIREITA: Entrada de valores */}
-			<aside className="rounded-2xl border border-green-200 bg-white p-6 shadow-sm">
-				<h2 className="text-lg font-semibold text-green-700">Inserir Valores</h2>
-				<p className="mb-4 mt-1 text-sm text-black-300 font-semibold">
-					Digite valores (R$) e clique em [Adicionar]. Aceita ponto ou vírgula (ex: 1400,50). Obs: Não clique em [Adicionar]
-					sem ter nenhum valor, pois isso vai alterar a média.
+			<aside className="order-last md:order-none rounded-2xl border border-green-300 bg-white p-4 shadow-sm sm:p-6">
+				<h2 className="text-base font-semibold text-green-700 sm:text-lg">Inserir Valores</h2>
+				<p className="mb-4 mt-1 text-xs text-green-700/80 sm:text-sm">
+					Digite valores (R$) e clique em [Adicionar]. Aceita ponto ou vírgula (ex: 1.234,56).
 				</p>
 
 				<div className="space-y-6">

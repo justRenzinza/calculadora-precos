@@ -5,10 +5,3 @@
 html, body {
   min-height: 100%;
 }
-
-/* exemplo: tema rápido (opcional) */
-@layer utilities {
-  .container-app {
-    @apply mx-auto max-w-6xl px-4;
-  }
-}

@@ -9,20 +9,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="pt-BR">
-			<body className="bg-white text-slate-800 antialiased">
-				<header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
-					<div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-						<div className="flex items-center gap-2">
-							<img src="/coffee-beans.png" alt="Ícone de café" className="h-6 w-6" />
-							<h1 className="text-lg font-semibold">Calculadora de Médias de Café</h1>
+		<html lang="pt-BR" className="h-full">
+			<body className="min-h-screen h-full flex flex-col bg-white text-slate-800 antialiased">
+				<header className="w-full sticky top-0 z-10 border-b border-green-700 bg-green-600 text-white backdrop-blur">
+					<div className="mx-auto flex max-w-6xl items-center justify-between px-3 py-2 sm:px-4 sm:py-3">
+						<div className="flex items-center gap-2 min-w-0">
+							<img src="/coffee-beans.png" alt="Ícone de café" className="h-5 w-5 sm:h-6 sm:w-6 shrink-0" />
+							<h1 className="truncate text-sm font-semibold sm:text-lg">
+								Calculadora de Médias de Café
+							</h1>
 						</div>
 					</div>
 				</header>
 
-				<main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+				<main className="flex-1 w-full overflow-x-hidden">
+					<div className="mx-auto max-w-6xl px-3 py-6 sm:px-4 sm:py-8">
+						{children}
+					</div>
+				</main>
 
-				<footer className="mt-12 border-t border-slate-200 px-4 py-6 text-center text-sm text-slate-500">
+				<footer className="w-full mt-auto border-t border-green-700 bg-green-600 px-3 py-2 text-center text-xs font-semibold text-white backdrop-blur sm:px-4 sm:py-3 sm:text-sm">
 					Projeto Calculadora para estudar Next.js, TypeScript e Tailwind.css
 				</footer>
 			</body>
