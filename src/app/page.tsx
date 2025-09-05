@@ -1,7 +1,7 @@
 // src/app/page.tsx
 'use client' 
 
-import { useMemo, useState } from 'react' 
+import { useEffect, useMemo, useState } from 'react' // useEffect adicionado para localStorage
 import { CoffeeCard } from '@/components/CoffeeCard' 
 import { ValueList } from '@/components/ValueList' 
 
@@ -15,19 +15,47 @@ const CULTURES: Culture[] = [
 	{ key: 'arabicaDuro', label: 'Arabica Duro' }, 
 ]
 
-// função para formatar valores em Real
-const formatBRL = (v: number) => 
-	v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) 
+// função para formatar no estilo 1400,50 (sem R$, sem pontos de milhar)
+const formatBRNumber = (v: number) => v.toFixed(2).replace('.', ',') 
 
-export default function Home() { // componente principal da página
+// chaves de armazenamento (por usuário)
+const USER_ID = 'default' // troque por um id real assim que tiver autenticação
+const STORAGE_KEY = `coffeeCalc:v1:values:${USER_ID}` // cada usuário salva em uma chave diferente
+
+// componente principal da página
+export default function Home() { 
 	const [values, setValues] = useState<Record<CoffeeKey, number[]>>({ // estado com os valores digitados por cultura
-		
-		// listas zeradas pq não tem valor até alguem adicionar
 		conilon: [], 
 		arabicaRio: [], 
 		arabicaDuro: [], 
 	})
-	
+
+	// carrega do localStorage ao montar
+	useEffect(() => {
+		try {
+			const raw = localStorage.getItem(STORAGE_KEY) // lê a chave do usuário
+			if (!raw) return // se não existe, não faz nada
+			const parsed = JSON.parse(raw) as Partial<Record<CoffeeKey, number[]>>
+			// validação simples e merge para garantir as 3 chaves
+			setValues({
+				conilon: Array.isArray(parsed?.conilon) ? (parsed!.conilon as number[]) : [],
+				arabicaRio: Array.isArray(parsed?.arabicaRio) ? (parsed!.arabicaRio as number[]) : [],
+				arabicaDuro: Array.isArray(parsed?.arabicaDuro) ? (parsed!.arabicaDuro as number[]) : [],
+			})
+		} catch {
+			// se der erro no parse, ignora e segue com estado vazio
+		}
+	}, [])
+
+	// salva no localStorage sempre que "values" mudar
+	useEffect(() => {
+		try {
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(values)) // persiste o estado
+		} catch {
+			// quota cheia ou modo privado — não precisa quebrar a app
+		}
+	}, [values])
+
 	// função que atualiza os valores de uma cultura especifica 
 	function setCultureValues(key: CoffeeKey, arr: number[]) { 
 		setValues((prev) => ({ ...prev, [key]: arr })) 
@@ -38,21 +66,23 @@ export default function Home() { // componente principal da página
 		if (!arr.length) return { avg: 0, min: 0, max: 0, count: 0 } 
 		const sum = arr.reduce((a, b) => a + b, 0) 
 		const avg = sum / arr.length 
-		return { avg, min: Math.min(...arr), max: Math.max(...arr), count: arr.length } // retorna os valores do coffeecard
+		return { avg, min: Math.min(...arr), max: Math.max(...arr), count: arr.length }
 	}
 
-	// memoriza estatistica dos cafés calculados na função acima
+	// memoriza estatistica dos cafés calculados
 	const perCulture = useMemo(() => { 
 		return {
 			conilon: stats(values.conilon), 
 			arabicaRio: stats(values.arabicaRio), 
 			arabicaDuro: stats(values.arabicaDuro), 
 		}
-	}, [values]) // recalcula sempre que values mudar
+	}, [values]) 
 
-	// função pra dar funcionalidade ao botão de limpar valores (só voltar os arrays pra 0)
+	// função pra limpar valores (reseta estado e apaga do storage)
 	function resetAll() { 
-		setValues({ conilon: [], arabicaRio: [], arabicaDuro: [] }) 
+		const empty = { conilon: [], arabicaRio: [], arabicaDuro: [] }
+		setValues(empty) // volta arrays para vazio
+		try { localStorage.setItem(STORAGE_KEY, JSON.stringify(empty)) } catch {} // sincroniza storage
 	}
 
 	return (
@@ -68,30 +98,24 @@ export default function Home() { // componente principal da página
 						<CoffeeCard
 							title="Conilon" 
 							value={perCulture.conilon.avg} 
-							extra={`Quantidade = ${perCulture.conilon.count} 
-							| Mínimo ${formatBRL(perCulture.conilon.min)} 
-							| Máximo ${formatBRL(perCulture.conilon.max)}`} 
-							formatBRL={formatBRL} 
+							extra={`Quantidade = ${perCulture.conilon.count} | Mínimo ${formatBRNumber(perCulture.conilon.min)} | Máximo ${formatBRNumber(perCulture.conilon.max)}`} 
+							formatBRL={formatBRNumber} 
 						/>
 					</div>
 					<div className="h-full">
 						<CoffeeCard
 							title="Arabica Rio" 
 							value={perCulture.arabicaRio.avg} 
-							extra={`Quantidade = ${perCulture.arabicaRio.count} 
-							| Mínimo ${formatBRL(perCulture.arabicaRio.min)} 
-							| Máximo ${formatBRL(perCulture.arabicaRio.max)}`} 
-							formatBRL={formatBRL} 
+							extra={`Quantidade = ${perCulture.arabicaRio.count} | Mínimo ${formatBRNumber(perCulture.arabicaRio.min)} | Máximo ${formatBRNumber(perCulture.arabicaRio.max)}`} 
+							formatBRL={formatBRNumber} 
 						/>
 					</div>
 					<div className="h-full">
 						<CoffeeCard
 							title="Arabica Duro" 
 							value={perCulture.arabicaDuro.avg} 
-							extra={`Quantidade = ${perCulture.arabicaDuro.count} 
-							| Mínimo ${formatBRL(perCulture.arabicaDuro.min)} 
-							| Máximo ${formatBRL(perCulture.arabicaDuro.max)}`} 
-							formatBRL={formatBRL} 
+							extra={`Quantidade = ${perCulture.arabicaDuro.count} | Mínimo ${formatBRNumber(perCulture.arabicaDuro.min)} | Máximo ${formatBRNumber(perCulture.arabicaDuro.max)}`} 
+							formatBRL={formatBRNumber} 
 						/>
 					</div>
 				</div>
