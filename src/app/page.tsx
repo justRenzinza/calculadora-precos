@@ -1,7 +1,7 @@
 // src/app/page.tsx
 'use client' 
 
-import { useEffect, useMemo, useState } from 'react' // useEffect adicionado para localStorage
+import { useEffect, useMemo, useState } from 'react' 
 import { CoffeeCard } from '@/components/CoffeeCard' 
 import { ValueList } from '@/components/ValueList' 
 
@@ -19,12 +19,12 @@ const CULTURES: Culture[] = [
 const formatBRNumber = (v: number) => v.toFixed(2).replace('.', ',') 
 
 // chaves de armazenamento (por usuário)
-const USER_ID = 'default' // troque por um id real assim que tiver autenticação
-const STORAGE_KEY = `coffeeCalc:v1:values:${USER_ID}` // cada usuário salva em uma chave diferente
+const USER_ID = 'default' 
+const STORAGE_KEY = `coffeeCalc:v1:values:${USER_ID}` 
 
 // componente principal da página
 export default function Home() { 
-	const [values, setValues] = useState<Record<CoffeeKey, number[]>>({ // estado com os valores digitados por cultura
+	const [values, setValues] = useState<Record<CoffeeKey, number[]>>({ 
 		conilon: [], 
 		arabicaRio: [], 
 		arabicaDuro: [], 
@@ -43,20 +43,20 @@ export default function Home() {
 				arabicaDuro: Array.isArray(parsed?.arabicaDuro) ? (parsed!.arabicaDuro as number[]) : [],
 			})
 		} catch {
-			// se der erro no parse, ignora e segue com estado vazio
+			// se der errado n acontece nada
 		}
 	}, [])
 
 	// salva no localStorage sempre que "values" mudar
 	useEffect(() => {
 		try {
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(values)) // persiste o estado
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(values)) 
 		} catch {
-			// quota cheia ou modo privado — não precisa quebrar a app
+			
 		}
 	}, [values])
 
-	// função que atualiza os valores de uma cultura especifica 
+	// função que atualiza os valores de um café especifico
 	function setCultureValues(key: CoffeeKey, arr: number[]) { 
 		setValues((prev) => ({ ...prev, [key]: arr })) 
 	}
@@ -78,11 +78,13 @@ export default function Home() {
 		}
 	}, [values]) 
 
-	// função pra limpar valores (reseta estado e apaga do storage)
+	// função pra limpar valores (zera o array e apaga do localStorage)
 	function resetAll() { 
 		const empty = { conilon: [], arabicaRio: [], arabicaDuro: [] }
 		setValues(empty) // volta arrays para vazio
-		try { localStorage.setItem(STORAGE_KEY, JSON.stringify(empty)) } catch {} // sincroniza storage
+		try { localStorage.setItem(STORAGE_KEY, JSON.stringify(empty)) } catch {
+
+		} 
 	}
 
 	return (
@@ -98,7 +100,9 @@ export default function Home() {
 						<CoffeeCard
 							title="Conilon" 
 							value={perCulture.conilon.avg} 
-							extra={`Quantidade = ${perCulture.conilon.count} | Mínimo ${formatBRNumber(perCulture.conilon.min)} | Máximo ${formatBRNumber(perCulture.conilon.max)}`} 
+							extra={`Quantidade = ${perCulture.conilon.count} 
+							| Mínimo ${formatBRNumber(perCulture.conilon.min)} 
+							| Máximo ${formatBRNumber(perCulture.conilon.max)}`} 
 							formatBRL={formatBRNumber} 
 						/>
 					</div>
@@ -106,7 +110,9 @@ export default function Home() {
 						<CoffeeCard
 							title="Arabica Rio" 
 							value={perCulture.arabicaRio.avg} 
-							extra={`Quantidade = ${perCulture.arabicaRio.count} | Mínimo ${formatBRNumber(perCulture.arabicaRio.min)} | Máximo ${formatBRNumber(perCulture.arabicaRio.max)}`} 
+							extra={`Quantidade = ${perCulture.arabicaRio.count} 
+							| Mínimo ${formatBRNumber(perCulture.arabicaRio.min)} 
+							| Máximo ${formatBRNumber(perCulture.arabicaRio.max)}`} 
 							formatBRL={formatBRNumber} 
 						/>
 					</div>
@@ -114,7 +120,9 @@ export default function Home() {
 						<CoffeeCard
 							title="Arabica Duro" 
 							value={perCulture.arabicaDuro.avg} 
-							extra={`Quantidade = ${perCulture.arabicaDuro.count} | Mínimo ${formatBRNumber(perCulture.arabicaDuro.min)} | Máximo ${formatBRNumber(perCulture.arabicaDuro.max)}`} 
+							extra={`Quantidade = ${perCulture.arabicaDuro.count} 
+							| Mínimo ${formatBRNumber(perCulture.arabicaDuro.min)} 
+							| Máximo ${formatBRNumber(perCulture.arabicaDuro.max)}`} 
 							formatBRL={formatBRNumber} 
 						/>
 					</div>
@@ -123,7 +131,8 @@ export default function Home() {
 				<div className="mt-4 sm:mt-6">
 					<button
 						onClick={resetAll} // botão que chama a função resetAll
-						className="w-full sm:w-auto rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100"
+						className="w-full sm:w-auto rounded-lg border border-red-200 bg-red-50 px-4 
+						py-2 text-sm font-medium transition duration-200 hover:scale-105 text-red-700 hover:bg-red-100"
 					>
 						Limpar valores
 					</button>
