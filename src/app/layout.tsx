@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				</main>
 
 				<footer className="w-full mt-auto border-t border-green-700 bg-green-600 px-3 py-2 text-center text-xs font-semibold text-white backdrop-blur sm:px-4 sm:py-3 sm:text-sm">
-					Projeto Calculadora para estudar Next.js, TypeScript e Tailwind.css
+					Next.js + TypeScript + Tailwind.css
 				</footer>
 			</body>
 		</html>
